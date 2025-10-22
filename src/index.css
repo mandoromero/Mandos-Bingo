@@ -20,22 +20,21 @@ body {
   align-items: center;
   background-color: #1e3a8a;
   color: white;
-  padding: 20px 2rem 12px 4rem;
+  padding: 10px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  font-size: 2rem;
+  font-size: 1.2rem;
   width: 100vw;
-  margin: -20px -30px 20px -20px;
 }
 
 .btn-wrapper {
   display: flex;
-  margin-left: 1400px;
+  margin-left: 1200px;
 
 }
 
 select {
   margin-right: 30px;
-  font-size: 2rem;
+  font-size: 1.2rem;
   padding: 10px 15px;
   background-color: #011345;
   color: white;
@@ -49,12 +48,13 @@ select:hover {
 }
 
 .start-btn {
-  font-size: 2rem;
+  font-size: 1.2rem;
   font-weight: 600;
   padding: 10px 15px;
   border-radius: 5px;
   background-color: #011345;
   color: white;
+  border-radius: 10px;
 }
 
 .start-btn:hover {
@@ -64,10 +64,11 @@ select:hover {
 
 .bingo-num-wrapper {
   width: 70%;
+  height: 450px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 2rem;
+  margin-top: 10px;
   gap: 2rem;
 }
 
@@ -75,6 +76,7 @@ select:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px white dashed;
 }
 
 .bingo-num-container {
@@ -83,18 +85,19 @@ select:hover {
   height: 150px;
   width: 150px;
   border: 1px black solid;
-  margin: 50px;;
+  margin: 50px;
   align-items: center;
   padding-top: 17px;
   border-radius: 50%;
   font-size: 2.5rem;
   font-weight: 800;
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;  
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px; 
+  border: 1px red dashed; 
 }
 
 .bingo-num-container.sphere.large {
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
   font-size: 2.5rem;
   display: flex;
   flex-direction: column;
@@ -103,8 +106,6 @@ select:hover {
 }
 
 .sphere {
-  width: 120px;
-  height: 120px;
   border-radius: 50%;
   background: radial-gradient(
     circle at 30% 30%,            /* light source top-left */
@@ -122,30 +123,6 @@ select:hover {
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
 }
 
-.sphere.large {
-  width: 140px;
-  height: 140opx;
-}
-
-.sphere.small {
-  width: 100px;
-  height: 100px;
-  font-size: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.sphere.letter {
-  font-size: 2rem;
-}
-
-.sphere.number {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
 .sphere.large .number {
   font-size: 3rem;
 }
@@ -159,10 +136,18 @@ select:hover {
   max-width: 100%;
   overflow: hidden; /* hides older ones as they shift */
   padding: 20px;
+  border: 1px red dashed;
 }
 
-.called {
-  font-size: 1.5rem;
+.called-ball.sphere.small {
+  font-size: 1rem;
+  height: 80px;
+  width: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
 }
 
 .generated-numbers {
@@ -176,18 +161,8 @@ select:hover {
 /* Wrapper centers everything */
 .reference-wrapper {
   display: flex;
-  margin-left: 200px;
-}
-
-.bingo-cell {
-  width: 50px;
-  height: 50px;
-  display: grid;
-  place-items: center;
-  border: 1px solid #ccc;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s;
+  margin-left: 150px;
+  border: 1px red dashed;
 }
 
 .bingo-cell.called {
@@ -221,15 +196,19 @@ select:hover {
 
 /* Header cells (B I N G O) */
 .reference-header-cell {
+  height: 27px;
   font-weight: bold;
-  font-size: 1.2rem;
-  background-color: #f3f4f6;
+  font-size: 1rem;
+  background-color: #1e3a8a;
+  color: white;
   border: 1px solid #ccc;
-  padding: 6px;
+  padding: 3px;
 }
 
 /* Number cells */
 .reference-cell {
+  height: 27px;
+  font-size: 0.7rem;
   border: 1px solid #ccc;
   padding: 6px;
   background-color: white;

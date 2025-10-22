@@ -48,8 +48,8 @@ export default function BingoNumbers() {
       <div className="bingo-called-container">
         {calledNumbers.map((num, index) => (
           <div key={index} className="called-ball sphere small">
-            <p className="called letter">{getLetter(num)}</p>
-            <p className="called number">{num}</p>
+            <p className="called-letter">{getLetter(num)}</p>
+            <p className="called-number">{num}</p>
           </div>
         ))}
       </div>
