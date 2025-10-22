@@ -1,0 +1,309 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #666362;;
+}
+
+/* Center the app container */
+#root {
+  width: 100%;
+  max-width: 600px;
+}
+
+.navbar {
+  display:flex;
+  align-items: center;
+  background-color: #1e3a8a;
+  color: white;
+  padding: 20px 2rem 12px 4rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  font-size: 2rem;
+  width: 100vw;
+  margin: -20px -30px 20px -20px;
+}
+
+.btn-wrapper {
+  display: flex;
+  margin-left: 1400px;
+
+}
+
+select {
+  margin-right: 30px;
+  font-size: 2rem;
+  padding: 10px 15px;
+  background-color: #011345;
+  color: white;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+select:hover {
+  background-color: #95c8d8;
+  color: #1e3a8a;
+}
+
+.start-btn {
+  font-size: 2rem;
+  font-weight: 600;
+  padding: 10px 15px;
+  border-radius: 5px;
+  background-color: #011345;
+  color: white;
+}
+
+.start-btn:hover {
+  background-color: #95c8d8;
+  color: #1e3a8a;
+}
+
+.bingo-num-wrapper {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+  gap: 2rem;
+}
+
+.bingo-current-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bingo-num-container {
+  display: flex;
+  flex-direction: column;
+  height: 150px;
+  width: 150px;
+  border: 1px black solid;
+  margin: 50px;;
+  align-items: center;
+  padding-top: 17px;
+  border-radius: 50%;
+  font-size: 2.5rem;
+  font-weight: 800;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;  
+}
+
+.bingo-num-container.sphere.large {
+  width: 200px;
+  height: 200px;
+  font-size: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.sphere {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 30% 30%,            /* light source top-left */
+    rgb(200, 150, 140),           /* highlight color */
+    rgb(161, 102, 91) 60%,        /* midtone */
+    rgb(90, 50, 45) 100%          /* shadow at edge */
+  );
+  box-shadow:
+    inset 0 0 15px rgba(0, 0, 0, 0.5),  /* inner depth */
+    0 8px 20px rgba(0, 0, 0, 0.4);      /* drop shadow */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.sphere.large {
+  width: 140px;
+  height: 140opx;
+}
+
+.sphere.small {
+  width: 100px;
+  height: 100px;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.sphere.letter {
+  font-size: 2rem;
+}
+
+.sphere.number {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.sphere.large .number {
+  font-size: 3rem;
+}
+
+.bingo-called-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5rem; /* spacing between small balls */
+  flex-wrap: nowrap;
+  max-width: 100%;
+  overflow: hidden; /* hides older ones as they shift */
+  padding: 20px;
+}
+
+.called {
+  font-size: 1.5rem;
+}
+
+.generated-numbers {
+  display: flex;
+}
+
+.game-wrapper {
+  width: 100vw;
+}
+
+/* Wrapper centers everything */
+.reference-wrapper {
+  display: flex;
+  margin-left: 200px;
+}
+
+.bingo-cell {
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.bingo-cell.called {
+  background-color: rgb(161, 102, 91);
+  color: white;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.bingo-cell.free {
+  background-color: gold;
+}
+
+.bingo-cell.called:hover {
+  transform: scale(1.05);
+}
+
+
+/* Parent grid — all 5 columns side by side */
+.reference-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 60px);
+  text-align: center;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px; 
+}
+
+/* Each column (B, I, N, G, O) with header + numbers */
+.reference-column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header cells (B I N G O) */
+.reference-header-cell {
+  font-weight: bold;
+  font-size: 1.2rem;
+  background-color: #f3f4f6;
+  border: 1px solid #ccc;
+  padding: 6px;
+}
+
+/* Number cells */
+.reference-cell {
+  border: 1px solid #ccc;
+  padding: 6px;
+  background-color: white;
+}
+
+/* Wrapper for all cards */
+.cards-wrapper {
+  display: flex;
+  flex-wrap: wrap;         
+  justify-content: center; 
+  height: 500px;
+  gap: 50px;
+  margin-top:20px;
+}
+
+/* Each card container */
+.card-container {
+  display: flex;
+  justify-content: center;
+  width: max-content;       /* shrink to fit content */
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  height: 460px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px; 
+}
+
+/* Bingo card grid: 5 columns side by side */
+.bingo-card {
+  display: flex;
+  margin-top: 5px;
+}
+
+.bingo-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.bingo-header {
+  font-weight: bold;
+  background-color: #1e3a8a;
+  color: white;
+  width: 75px;
+  height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px black solid;
+}
+
+.square {
+  width: 75px;
+  height: 75px;
+  border: 2px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  background-color: #f8fafc;
+}
+
+.square.free-square {
+  background-color: #95c8d8;
+  color: #011345;
+  font-weight: bold;
+}
+
+/* Mobile: stack cards vertically */
+@media (max-width: 800px) {
+  .cards-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+}
