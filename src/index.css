@@ -64,12 +64,14 @@ select:hover {
 
 .bingo-num-wrapper {
   width: 70%;
-  height: 450px;
+  height: 400;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 10px;
+  margin-bottom: 0;
   gap: 2rem;
+  border: 1px red dashed;
 }
 
 .bingo-current-container {
@@ -96,9 +98,9 @@ select:hover {
 }
 
 .bingo-num-container.sphere.large {
-  width: 150px;
-  height: 150px;
-  font-size: 2.5rem;
+  width: 125px;
+  height: 125px;
+  font-size: 1.8rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -137,6 +139,7 @@ select:hover {
   overflow: hidden; /* hides older ones as they shift */
   padding: 20px;
   border: 1px red dashed;
+  margin-top: 0;
 }
 
 .called-ball.sphere.small {
@@ -207,7 +210,7 @@ select:hover {
 
 /* Number cells */
 .reference-cell {
-  height: 27px;
+  height: 20px;
   font-size: 0.7rem;
   border: 1px solid #ccc;
   padding: 6px;
@@ -227,20 +230,21 @@ select:hover {
 /* Each card container */
 .card-container {
   display: flex;
-  justify-content: center;
-  width: max-content;       /* shrink to fit content */
+  justify-content: center; 
+  margin-top: 50px;
   padding: 10px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-  height: 460px;
+  height: 310px;
   box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px; 
 }
 
 /* Bingo card grid: 5 columns side by side */
 .bingo-card {
   display: flex;
-  margin-top: 5px;
+  justify-content: center;
+  gap: 5px;
 }
 
 .bingo-column {
@@ -253,9 +257,9 @@ select:hover {
 .bingo-header {
   font-weight: bold;
   background-color: #1e3a8a;
+  width: 50px;
+  height: 50px;
   color: white;
-  width: 75px;
-  height: 75px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -263,9 +267,9 @@ select:hover {
 }
 
 .square {
-  width: 75px;
-  height: 75px;
-  border: 2px solid black;
+  width: 50px;
+  height: 50px;
+  border: 2px black solid;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -273,11 +277,23 @@ select:hover {
   background-color: #f8fafc;
 }
 
-.square.free-square {
-  background-color: #95c8d8;
-  color: #011345;
+.bingo-cell.clickable {
+  cursor: pointer;
+  background-color: #f8f8f8;
+}
+
+.bingo-cell.highlighted {
+  background-color: gold;
+  color: #000;
   font-weight: bold;
 }
+
+.bingo-cell.free {
+  background-color: #5b9bd5;
+  color: white;
+  font-weight: bold;
+}
+
 
 /* Mobile: stack cards vertically */
 @media (max-width: 800px) {

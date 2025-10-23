@@ -6,9 +6,9 @@ const initialState = {
   gameStarted: false,
   numCards: 0,
   cards: [],
-  currentNumber: null,
+  selectedCells: [], // NEW
   calledNumbers: [],
-  remainingNumbers: [...allNumbers],
+  currentNumber: null,
 };
 
 const bingoSlice = createSlice({
@@ -32,15 +32,9 @@ const bingoSlice = createSlice({
     setNumCards: (state, action) => {
       state.numCards = action.payload;
     },
-    setCards: (state, action) => {
-      // Initialize "marked" property for every number
-      state.cards = action.payload.map((card) => {
-        const marked = {};
-        for (const letter of ["B", "I", "N", "G", "O"]) {
-          marked[letter] = Array(5).fill(false);
-        }
-        return { ...card, marked };
-      });
+    setCards(state, action) {
+      state.cards = action.payload;
+      state.selectedCells = action.payload.map(() => ({})); // reset selections
     },
     callNextNumber: (state) => {
       if (state.remainingNumbers.length === 0) return;
@@ -56,10 +50,17 @@ const bingoSlice = createSlice({
 
       state.currentNumber = nextNum;
     },
-    toggleMarked: (state, action) => {
-      const { cardIndex, letter, idx } = action.payload;
-      const markedCell = state.cards[cardIndex].marked[letter][idx];
-      state.cards[cardIndex].marked[letter][idx] = !markedCell;
+    toggleCell(state, action) {
+      const { cardIndex, col, row } = action.payload;
+      const cellValue = state.cards[cardIndex][col][row];
+  
+      // Only allow clicking cells that correspond to called numbers (or "Free")
+      if (cellValue === "Free" || state.calledNumbers.includes(cellValue)) {
+        const current = state.selectedCells[cardIndex] || {};
+        const cellId = `${col}${row}`;
+        current[cellId] = !current[cellId]; // toggle highlight
+        state.selectedCells[cardIndex] = current;
+      }
     },
   },
 });
@@ -70,7 +71,7 @@ export const {
   setNumCards,
   setCards,
   callNextNumber,
-  toggleMarked,
+  toggleCell,
 } = bingoSlice.actions;
 
 export default bingoSlice.reducer;
