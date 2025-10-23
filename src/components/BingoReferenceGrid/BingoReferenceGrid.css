@@ -1,0 +1,44 @@
+/* Wrapper around the entire reference grid */
+.reference-wrapper {
+  display: flex;
+  margin-left: 10px;
+}
+
+/* Parent grid — all 5 columns side by side */
+.reference-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 60px); /* one column per letter */
+  text-align: center;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;
+}
+
+/* Each column (B, I, N, G, O) with header + numbers */
+.reference-column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header cells (B I N G O) */
+.reference-header-cell {
+  height: 27px;
+  font-weight: bold;
+  font-size: 1rem;
+  background-color: #1e3a8a;
+  color: white;
+  border: 1px solid #ccc;
+  padding: 3px;
+}
+
+/* Number cells inside each column */
+.reference-cell {
+  height: 20px;
+  font-size: 0.7rem;
+  border: 1px solid #ccc;
+  padding: 6px;
+  background-color: black;
+  color: black;
+}
+
+.called-number {
+  color: gold;
+}

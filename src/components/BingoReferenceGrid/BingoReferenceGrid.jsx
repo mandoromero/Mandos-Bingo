@@ -1,6 +1,7 @@
 import React from "react";
+import "./BingoReferenceGrid.css";
 
-export default function BingoReferenceGrid() {
+export default function BingoReferenceGrid({ calledNumbers = [] }) {
   const bingoColumns = {
     B: Array.from({ length: 15 }, (_, i) => i + 1),
     I: Array.from({ length: 15 }, (_, i) => i + 16),
@@ -14,15 +15,20 @@ export default function BingoReferenceGrid() {
   return (
     <div className="reference-wrapper">
       <div className="reference-grid">
-        {/* One unified grid: letters + all their numbers */}
         {letters.map((letter) => (
           <div key={letter} className="reference-column">
             <div className="reference-header-cell">{letter}</div>
-            {bingoColumns[letter].map((num) => (
-              <div key={num} className="reference-cell">
-                {num}
-              </div>
-            ))}
+            {bingoColumns[letter].map((num) => {
+              const isCalled = calledNumbers.includes(num);
+              return (
+                <div
+                  key={num}
+                  className={`reference-cell ${isCalled ? "called-numbers" : ""}`}
+                >
+                  {num}
+                </div>
+              );
+            })}
           </div>
         ))}
       </div>

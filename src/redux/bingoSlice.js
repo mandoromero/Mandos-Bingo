@@ -1,14 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// All possible Bingo numbers (1–75)
 const allNumbers = Array.from({ length: 75 }, (_, i) => i + 1);
 
 const initialState = {
   gameStarted: false,
   numCards: 0,
-  cards: [],
-  selectedCells: [], // NEW
-  calledNumbers: [],
-  currentNumber: null,
+  cards: [],            // Array of Bingo cards
+  selectedCells: [],    // Tracks marked cells for each card
+  calledNumbers: [],    // Last 8 called numbers
+  currentNumber: null,  // Current drawn number
+  remainingNumbers: [...allNumbers], // Numbers left to draw
 };
 
 const bingoSlice = createSlice({
@@ -21,21 +23,26 @@ const bingoSlice = createSlice({
       state.calledNumbers = [];
       state.currentNumber = null;
     },
+
     resetGame: (state) => {
       state.gameStarted = false;
       state.cards = [];
       state.numCards = 0;
-      state.currentNumber = null;
+      state.selectedCells = [];
       state.calledNumbers = [];
+      state.currentNumber = null;
       state.remainingNumbers = [...allNumbers];
     },
+
     setNumCards: (state, action) => {
       state.numCards = action.payload;
     },
-    setCards(state, action) {
+
+    setCards: (state, action) => {
       state.cards = action.payload;
       state.selectedCells = action.payload.map(() => ({})); // reset selections
     },
+
     callNextNumber: (state) => {
       if (state.remainingNumbers.length === 0) return;
 
@@ -50,15 +57,20 @@ const bingoSlice = createSlice({
 
       state.currentNumber = nextNum;
     },
-    toggleCell(state, action) {
+
+    toggleCell: (state, action) => {
       const { cardIndex, col, row } = action.payload;
       const cellValue = state.cards[cardIndex][col][row];
-  
-      // Only allow clicking cells that correspond to called numbers (or "Free")
-      if (cellValue === "Free" || state.calledNumbers.includes(cellValue)) {
+
+      // Only toggle cells that match called numbers or "Free"
+      if (
+        cellValue === "Free" ||
+        state.calledNumbers.includes(cellValue) ||
+        state.currentNumber === cellValue
+      ) {
         const current = state.selectedCells[cardIndex] || {};
         const cellId = `${col}${row}`;
-        current[cellId] = !current[cellId]; // toggle highlight
+        current[cellId] = !current[cellId];
         state.selectedCells[cardIndex] = current;
       }
     },

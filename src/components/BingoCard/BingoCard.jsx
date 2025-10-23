@@ -1,15 +1,15 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleCell } from "../redux/bingoSlice";
+import { toggleCell } from "../../redux/bingoSlice";
+import "./BingoCard.css";
 
-export default function BingoCard({ cardIndex }) {
+export default function BingoCard({ card, cardIndex }) {
   const dispatch = useDispatch();
-  const { cards, calledNumbers, selectedCells } = useSelector(
+  const { calledNumbers, currentNumber, selectedCells } = useSelector(
     (state) => state.bingo
   );
 
-  const card = cards[cardIndex];
-  const activeNumbers = new Set(calledNumbers);
+  const activeNumbers = new Set([...calledNumbers, currentNumber]);
 
   return (
     <div className="cards-wrapper">
@@ -18,12 +18,11 @@ export default function BingoCard({ cardIndex }) {
           {["B", "I", "N", "G", "O"].map((letter) => (
             <div key={letter} className="bingo-column">
               <div className="bingo-header">{letter}</div>
-              {card[letter].map((num, row) => {
+              {card[letter].map((num, idx) => {
                 const isFree = num === "Free";
-                const isCalled =
-                  num === "Free" || calledNumbers.includes(num);
-                const cellId = `${letter}${row}`;
-                const isSelected =
+                const isCalled = activeNumbers.has(num);
+                const cellId = `${letter}${idx}`;
+                const isMarked =
                   selectedCells[cardIndex]?.[cellId] || false;
 
                 return (
@@ -32,11 +31,10 @@ export default function BingoCard({ cardIndex }) {
                     className={`square bingo-cell
                       ${isFree ? "free" : ""}
                       ${isCalled ? "called" : ""}
-                      ${isSelected ? "selected" : ""}`}
+                      ${isMarked ? "marked" : ""}`}
                     onClick={() => {
-                      // ✅ This is where the dispatch call goes:
                       if (isCalled || isFree) {
-                        dispatch(toggleCell({ cardIndex, col: letter, row }));
+                        dispatch(toggleCell({ cardIndex, col: letter, row: idx }));
                       }
                     }}
                   >

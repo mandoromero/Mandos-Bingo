@@ -1,9 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import Navbar from "./components/Navbar";
-import BingoNumbers from "./components/BingoNumbers";
-import BingoReferenceGrid from "./components/BingoReferenceGrid";
-import BingoCard from "./components/BingoCard";
+import Navbar from "./components/Navbar/Navbar";
+import BingoNumber from "./components/BingoNumber/BingoNumber";
+import SelectedNumbers from "./components/SelectedNumbers/SelectedNumbers.jsx";
+import BingoReferenceGrid from "./components/BingoReferenceGrid/BingoReferenceGrid";
+import BingoCard from "./components/BingoCard/BingoCard";
+import "./App.css";
 
 function App() {
   const { numCards, gameStarted, cards } = useSelector((state) => state.bingo);
@@ -12,7 +14,8 @@ function App() {
     <div className="game-wrapper">
       <Navbar />
       <div className="generated-numbers">
-        <BingoNumbers />
+        <BingoNumber />
+        <SelectedNumbers />
         <BingoReferenceGrid />
       </div>
 
