@@ -10,6 +10,7 @@
   grid-template-columns: repeat(5, 60px); /* one column per letter */
   text-align: center;
   box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;
+  margin: 10px;
 }
 
 /* Each column (B, I, N, G, O) with header + numbers */
@@ -31,14 +32,17 @@
 
 /* Number cells inside each column */
 .reference-cell {
-  height: 20px;
-  font-size: 0.7rem;
+  height: 22px;
+  font-size: 1rem;
   border: 1px solid #ccc;
-  padding: 6px;
+  padding: 2px;
   background-color: black;
   color: black;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
-.called-number {
+.reference-cell.called-number {
   color: gold;
+  text-shadow: 0 0 5px gold;
+  font-weight: bold;
 }

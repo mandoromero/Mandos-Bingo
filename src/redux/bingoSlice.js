@@ -1,16 +1,51 @@
 import { createSlice } from "@reduxjs/toolkit";
+import {
+  singleLineWin,
+  doubleLineWin,
+  tShapedWin,
+  xShapedWin,
+  crossShapedWin,
+} from "../utils/winningCombinations";
 
 // All possible Bingo numbers (1–75)
 const allNumbers = Array.from({ length: 75 }, (_, i) => i + 1);
 
+// Shuffle helper
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
 const initialState = {
   gameStarted: false,
   numCards: 0,
-  cards: [],            // Array of Bingo cards
-  selectedCells: [],    // Tracks marked cells for each card
-  calledNumbers: [],    // Last 8 called numbers
-  currentNumber: null,  // Current drawn number
-  remainingNumbers: [...allNumbers], // Numbers left to draw
+  cards: [],
+  selectedCells: [],
+  calledNumbers: [],
+  currentNumber: null,
+  remainingNumbers: [...allNumbers],
+  winningCombination: "",
+  winner: null,
+};
+
+const checkForWin = (combination, card, selectedCells) => {
+  switch (combination) {
+    case "singleLine":
+      return singleLineWin(card, selectedCells);
+    case "doubleLine":
+      return doubleLineWin(card, selectedCells);
+    case "xShape":
+      return xShapedWin(card, selectedCells);
+    case "tShape":
+      return tShapedWin(card, selectedCells);
+    case "crossShape":
+      return crossShapedWin(card, selectedCells);
+    default:
+      return false;
+  }
 };
 
 const bingoSlice = createSlice({
@@ -18,20 +53,27 @@ const bingoSlice = createSlice({
   initialState,
   reducers: {
     startGame: (state) => {
+      if (!state.winningCombination) {
+        alert("Please select a winning combination before starting!");
+        return;
+      }
       state.gameStarted = true;
-      state.remainingNumbers = [...allNumbers];
+      state.remainingNumbers = shuffle([...allNumbers]);
       state.calledNumbers = [];
       state.currentNumber = null;
+      state.winner = null;
     },
 
     resetGame: (state) => {
       state.gameStarted = false;
-      state.cards = [];
       state.numCards = 0;
+      state.cards = [];
       state.selectedCells = [];
       state.calledNumbers = [];
       state.currentNumber = null;
       state.remainingNumbers = [...allNumbers];
+      state.winningCombination = "";
+      state.winner = null;
     },
 
     setNumCards: (state, action) => {
@@ -40,19 +82,21 @@ const bingoSlice = createSlice({
 
     setCards: (state, action) => {
       state.cards = action.payload;
-      state.selectedCells = action.payload.map(() => ({})); // reset selections
+      // initialize selected cells for each card
+      state.selectedCells = action.payload.map(() => ({}));
+    },
+
+    setWinningCombination: (state, action) => {
+      state.winningCombination = action.payload;
     },
 
     callNextNumber: (state) => {
-      if (state.remainingNumbers.length === 0) return;
+      if (!state.gameStarted || state.remainingNumbers.length === 0) return;
 
-      const randomIndex = Math.floor(Math.random() * state.remainingNumbers.length);
-      const nextNum = state.remainingNumbers[randomIndex];
-      state.remainingNumbers.splice(randomIndex, 1);
+      const nextNum = state.remainingNumbers.shift();
 
       if (state.currentNumber !== null) {
-        state.calledNumbers.push(state.currentNumber);
-        if (state.calledNumbers.length > 8) state.calledNumbers.shift();
+        state.calledNumbers.push(state.currentNumber); // keep all previous numbers
       }
 
       state.currentNumber = nextNum;
@@ -62,7 +106,6 @@ const bingoSlice = createSlice({
       const { cardIndex, col, row } = action.payload;
       const cellValue = state.cards[cardIndex][col][row];
 
-      // Only toggle cells that match called numbers or "Free"
       if (
         cellValue === "Free" ||
         state.calledNumbers.includes(cellValue) ||
@@ -72,6 +115,14 @@ const bingoSlice = createSlice({
         const cellId = `${col}${row}`;
         current[cellId] = !current[cellId];
         state.selectedCells[cardIndex] = current;
+
+        // 🔍 Check for a win
+        const card = state.cards[cardIndex];
+        const selected = state.selectedCells[cardIndex];
+        if (checkForWin(state.winningCombination, card, selected)) {
+          state.winner = cardIndex; // store which card won
+          state.gameStarted = false; // optional: stop game when someone wins
+        }
       }
     },
   },
@@ -84,6 +135,7 @@ export const {
   setCards,
   callNextNumber,
   toggleCell,
+  setWinningCombination,
 } = bingoSlice.actions;
 
 export default bingoSlice.reducer;

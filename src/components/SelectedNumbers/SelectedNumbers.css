@@ -1,17 +1,17 @@
-.selected-nums-wrapper {
+.selected-nums-wrapper{
     display: flex;
     flex-direction: column;
-    padding: 10px;
-    margin-right: 0;
+    width: 1210px;
 }
 
-.selected-nums-container {
+.selected-nums-row {
     display: flex;
     flex-direction: row;
+    flex-wrap: nowrap;
     gap: 10px;
-    padding: 5px;
+    padding: 10px;
     height: 25%;
-    width: 1210px;
+    border: 1px white dashed
     margin-right: 0;
 }
 

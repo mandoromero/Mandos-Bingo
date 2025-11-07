@@ -1,6 +1,5 @@
-// utils/generateBingoCard.js
 
-// Helper: generate unique random numbers within a range
+
 function getRandomNumbers(min, max, count) {
   const numbers = new Set();
   while (numbers.size < count) {
@@ -9,7 +8,6 @@ function getRandomNumbers(min, max, count) {
   return Array.from(numbers);
 }
 
-// Generate one Bingo card
 export function generateSingleCard() {
   const card = {
     B: getRandomNumbers(1, 15, 5),
@@ -18,15 +16,11 @@ export function generateSingleCard() {
     G: getRandomNumbers(46, 60, 5),
     O: getRandomNumbers(61, 75, 5),
   };
-
-  // Add "Free" space in the middle of the N column (3rd position)
-  card.N[2] = "Free";
-
+  card.N[2] = "Free"; // middle of N column
   return card;
 }
 
-// Generate multiple unique Bingo cards
-export function generateMultipleCards(count = 10) {
+export function generateMultipleCards(count = 1) {
   const cards = [];
   for (let i = 0; i < count; i++) {
     cards.push(generateSingleCard());

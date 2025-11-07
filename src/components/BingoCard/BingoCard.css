@@ -1,15 +1,5 @@
 /* Wrapper for all cards */
-.cards-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  height: 500px;
-  gap: 50px;
-  margin-top: 20px;
-}
-
-/* Each card container */
-.card-container {
+.bingo-wrapper {
   display: flex;
   justify-content: center;
   margin-top: 50px;
@@ -21,11 +11,35 @@
   box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;
 }
 
+.bingo-btn {
+  display: block;
+  margin: 10px auto;
+  background: gold;
+  color: black;
+  border: none;
+  font-size: 1.5rem;
+  font-weight: 800;
+  padding: 10px 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px gold;
+  animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
 /* Bingo card grid: 5 columns side by side */
 .bingo-card {
   display: flex;
   justify-content: center;
-  gap: 5px;
 }
 
 /* Each column (B, I, N, G, O) */
@@ -38,6 +52,7 @@
 
 /* Header cells (B I N G O) */
 .bingo-header {
+  font-size: 1.5rem;
   font-weight: bold;
   background-color: #1e3a8a;
   width: 50px;
@@ -57,7 +72,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   background-color: #f8fafc;
   transition: transform 0.2s, background-color 0.2s;
 }
