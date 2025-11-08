@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleCell } from "../../redux/bingoSlice";
 import {
@@ -8,55 +8,62 @@ import {
   tShapedWin,
   crossShapedWin,
 } from "../../utils/winningCombinations";
+import WinningOverlay from "../WinningOverlay/WinningOverlay";
 import "./BingoCard.css";
 
 export default function BingoCard({ card, cardIndex }) {
   const dispatch = useDispatch();
-  const {
-    selectedCells,
-    winningCombination,
-  } = useSelector((state) => state.bingo);
+  const { selectedCells, winningCombination } = useSelector(
+    (state) => state.bingo
+  );
 
+  const [showEffect, setShowEffect] = useState(false);
   const cardSelected = selectedCells[cardIndex] || {};
 
   // ✅ Check if this card has achieved the selected winning combination
   const isWinningCard = (() => {
     switch (winningCombination) {
-      case "singleLine":
+      case "Single Line":
         return singleLineWin(card, cardSelected);
-      case "doubleLine":
+      case "Double Line":
         return doubleLineWin(card, cardSelected);
-      case "xShape":
+      case "X Shape":
         return xShapedWin(card, cardSelected);
-      case "tShape":
+      case "T Shape":
         return tShapedWin(card, cardSelected);
-      case "crossShape":
+      case "Cross Shape":
         return crossShapedWin(card, cardSelected);
       default:
         return false;
     }
   })();
 
-  // Handle toggle
-  const handleToggle = (col, row, num) => {
-    // Only allow toggling if Free or number has been called
+  const handleToggle = (col, row) => {
     dispatch(toggleCell({ cardIndex, col, row }));
   };
 
+  const handleBingo = () => {
+    setShowEffect(true);
+    setTimeout(() => setShowEffect(false), 5000);
+  };
+
   return (
-    <div className="bingo-wrapper">
-      {/* Bingo button appears only after a winning combination is achieved */}
+    <div className="bingo-wrapper" style={{ position: "relative" }}>
+      {/* 🎉 Confetti effect over this specific card */}
+      {showEffect && <WinningOverlay targetId={`bingo-card-${cardIndex}`} />}
+
+      {/* ✅ Bingo button appears once winning combo is achieved */}
       {isWinningCard && (
-        <button
-          id="bingo-btn"
+        <button className="bingo-btn"
+          id={`bingo-btn-${cardIndex}`}
           className="bingo-btn"
-          onClick={() => alert(`🎉 Card ${cardIndex + 1} wins! 🎉`)}
+          onClick={handleBingo}
         >
-          Bingo!
+          🎉 Bingo! 🎉
         </button>
       )}
 
-      <div className="bingo-card">
+      <div id={`bingo-card-${cardIndex}`} className="bingo-card">
         {["B", "I", "N", "G", "O"].map((letter) => (
           <div key={letter} className="bingo-column">
             <div className="bingo-header">{letter}</div>
@@ -71,7 +78,7 @@ export default function BingoCard({ card, cardIndex }) {
                   className={`square bingo-cell ${isFree ? "free" : ""} ${
                     isMarked ? "marked" : ""
                   }`}
-                  onClick={() => handleToggle(letter, idx, num)}
+                  onClick={() => handleToggle(letter, idx)}
                 >
                   {num}
                 </div>

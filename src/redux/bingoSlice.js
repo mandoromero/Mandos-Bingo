@@ -120,8 +120,8 @@ const bingoSlice = createSlice({
         const card = state.cards[cardIndex];
         const selected = state.selectedCells[cardIndex];
         if (checkForWin(state.winningCombination, card, selected)) {
-          state.winner = cardIndex; // store which card won
-          state.gameStarted = false; // optional: stop game when someone wins
+          state.winner = cardIndex; 
+          state.gameStarted = false; 
         }
       }
     },

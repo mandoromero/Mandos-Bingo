@@ -10,13 +10,14 @@
 }
 
 h1 {
-  width: 350px;
-  margin-left: 200px;
+  width: 450px;
+  margin-left: 100px;
+  border: 1pz white dashed;
 }
 
 .btn-wrapper {
   display: flex;
-  margin-left: 650px; /* adjust spacing as needed */
+  margin-left: 550px; /* adjust spacing as needed */
 }
 
 /* Dropdown for number of cards */

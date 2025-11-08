@@ -15,9 +15,12 @@ export default function App() {
     <div className="game-wrapper">
       <Navbar />
       <div className="generated-numbers">
-        <BingoNumber />
-        <SelectedNumbers />
-        <BingoReferenceGrid />
+       <BingoReferenceGrid />
+       <BingoNumber />
+       <SelectedNumbers />
+       
+        
+        
       </div>
 
       <NumberCaller />

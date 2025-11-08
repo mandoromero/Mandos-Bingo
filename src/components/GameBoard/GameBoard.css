@@ -1,6 +1,6 @@
 .gameboard {
     display: flex;
-   justify-content: space-around;
+   justify-content: center;
     width: 100vw;
-    border: 1px red dashed;
+    gap: 25px;
 }
