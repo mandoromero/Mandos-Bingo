@@ -54,7 +54,7 @@ export default function BingoCard({ card, cardIndex }) {
 
       {/* ✅ Bingo button appears once winning combo is achieved */}
       {isWinningCard && (
-        <button className="bingo-btn"
+        <button
           id={`bingo-btn-${cardIndex}`}
           className="bingo-btn"
           onClick={handleBingo}
