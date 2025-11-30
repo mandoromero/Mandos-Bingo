@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar/Navbar";
 import BingoNumber from "./components/BingoNumber/BingoNumber";
 import SelectedNumbers from "./components/SelectedNumbers/SelectedNumbers";
 import BingoReferenceGrid from "./components/BingoReferenceGrid/BingoReferenceGrid";
+import Call from "./components/Call";
 import GameBoard from "./components/GameBoard/GameBoard";
 import NumberCaller from "./components/NumberCaller";
 import "./App.css";
@@ -15,16 +16,12 @@ export default function App() {
     <div className="game-wrapper">
       <Navbar />
       <div className="generated-numbers">
-       <BingoReferenceGrid />
-       <BingoNumber />
-       <SelectedNumbers />
-       
-        
-        
+        <BingoReferenceGrid />
+        <BingoNumber />
+        <Call />
+        <SelectedNumbers />  
       </div>
-
       <NumberCaller />
-
       {gameStarted && <GameBoard />}
     </div>
   );

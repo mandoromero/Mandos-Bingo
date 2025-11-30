@@ -21,6 +21,7 @@ function shuffle(array) {
 
 const initialState = {
   gameStarted: false,
+  paused: false,
   numCards: 0,
   cards: [],
   selectedCells: [],
@@ -58,6 +59,7 @@ const bingoSlice = createSlice({
         return;
       }
       state.gameStarted = true;
+      state.paused = false;
       state.remainingNumbers = shuffle([...allNumbers]);
       state.calledNumbers = [];
       state.currentNumber = null;
@@ -66,6 +68,7 @@ const bingoSlice = createSlice({
 
     resetGame: (state) => {
       state.gameStarted = false;
+      state.paused = false;
       state.numCards = 0;
       state.cards = [];
       state.selectedCells = [];
@@ -74,6 +77,17 @@ const bingoSlice = createSlice({
       state.remainingNumbers = [...allNumbers];
       state.winningCombination = "";
       state.winner = null;
+    },
+
+    // ✅ stop the game without resetting cards / selections
+    stopGame: (state) => {
+      state.gameStarted = false;
+      state.paused = false; // optional, but keeps things consistent
+    },
+
+    togglePause: (state) => {
+      if (!state.gameStarted) return;
+      state.paused = !state.paused;
     },
 
     setNumCards: (state, action) => {
@@ -120,8 +134,8 @@ const bingoSlice = createSlice({
         const card = state.cards[cardIndex];
         const selected = state.selectedCells[cardIndex];
         if (checkForWin(state.winningCombination, card, selected)) {
-          state.winner = cardIndex; 
-          state.gameStarted = false; 
+          state.winner = cardIndex;
+          state.gameStarted = false;
         }
       }
     },
@@ -131,11 +145,13 @@ const bingoSlice = createSlice({
 export const {
   startGame,
   resetGame,
+  stopGame,          // ⬅️ export it
   setNumCards,
   setCards,
   callNextNumber,
   toggleCell,
   setWinningCombination,
+  togglePause,
 } = bingoSlice.actions;
 
 export default bingoSlice.reducer;

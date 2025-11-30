@@ -51,3 +51,14 @@ select:hover {
   background-color: #95c8d8;
   color: #1e3a8a;
 }
+
+.pause-btn {
+  font-size: 1.3rem;
+  font-weight: 600;
+  background-color: yellow;
+  color: #1e3a8a;
+  padding: 10px 15px;
+  border-radius: 10px;
+  cursor: pointer;  
+  margin-left: 10px;
+}

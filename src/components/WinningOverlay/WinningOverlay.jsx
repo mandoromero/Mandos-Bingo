@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Confetti from "react-confetti";
+import { useDispatch } from "react-redux";
+import { stopGame } from "../../redux/bingoSlice";
 
 export default function WinningOverlay({ targetId, duration = 5000 }) {
   const [showConfetti, setShowConfetti] = useState(true);
   const [bounds, setBounds] = useState(null);
+  const dispatch = useDispatch();
 
   // 🎯 Get target element's position & size for confetti overlay
   useEffect(() => {
@@ -19,16 +22,23 @@ export default function WinningOverlay({ targetId, duration = 5000 }) {
 
   if (!showConfetti || !bounds) return null;
 
+  const handleClick = () => {
+    // 🛑 Just stop the game, don't reset state
+    dispatch(stopGame());
+  };
+
   return (
     <div
+      onClick={handleClick}
       style={{
         position: "absolute",
-        top: 0,
-        left: 0,
-        pointerEvents: "none",
+        top: bounds.top + window.scrollY,
+        left: bounds.left + window.scrollX,
         width: bounds.width,
         height: bounds.height,
         overflow: "hidden",
+        pointerEvents: "auto", // allow clicks
+        cursor: "pointer",
       }}
     >
       <Confetti

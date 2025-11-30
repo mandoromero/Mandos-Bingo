@@ -4,15 +4,23 @@ import { callNextNumber } from "../../src/redux/bingoSlice";
 
 export default function NumberCaller() {
   const dispatch = useDispatch();
-  const { gameStarted, remainingNumbers } = useSelector((state) => state.bingo);
+  const { gameStarted, remainingNumbers, paused } = useSelector(
+    (state) => state.bingo
+  );
   const intervalRef = useRef(null);
   const timeoutRef = useRef(null);
 
   useEffect(() => {
-    // Stop everything if game isn't started
-    if (!gameStarted) return;
+    // Stop everything if game isn't started or is paused
+    if (!gameStarted || paused) {
+      clearTimeout(timeoutRef.current);
+      clearInterval(intervalRef.current);
+      timeoutRef.current = null;
+      intervalRef.current = null;
+      return;
+    }
 
-    // Prevent multiple intervals if component re-renders
+    // Prevent multiple intervals if already running
     if (intervalRef.current || timeoutRef.current) return;
 
     // Wait 3 seconds before first number
@@ -22,23 +30,25 @@ export default function NumberCaller() {
       // Then call a new number every 3 seconds
       intervalRef.current = setInterval(() => {
         dispatch(callNextNumber());
-      }, 3000);
+      }, 6000);
     }, 3000);
 
-    // Cleanup when game stops or unmounts
+    // Cleanup when game stops/unmounts
     return () => {
       clearTimeout(timeoutRef.current);
       clearInterval(intervalRef.current);
       timeoutRef.current = null;
       intervalRef.current = null;
     };
-  }, [gameStarted, dispatch]);
+  }, [gameStarted, paused, dispatch]);
 
   // Stop automatically when all numbers are called
   useEffect(() => {
     if (remainingNumbers.length === 0) {
       clearInterval(intervalRef.current);
       clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+      intervalRef.current = null;
     }
   }, [remainingNumbers]);
 
