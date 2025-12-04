@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleCell } from "../../redux/bingoSlice";
+import { toggleCell, stopGame } from "../../redux/bingoSlice";
 import {
   singleLineWin,
   doubleLineWin,
@@ -42,10 +42,11 @@ export default function BingoCard({ card, cardIndex }) {
     dispatch(toggleCell({ cardIndex, col, row }));
   };
 
-  const handleBingo = () => {
+  const handleBingoClick = () => {
     setShowEffect(true);
+    dispatch(stopGame());
     setTimeout(() => setShowEffect(false), 5000);
-  };
+  }
 
   return (
     <div className="bingo-wrapper" style={{ position: "relative" }}>
@@ -57,7 +58,7 @@ export default function BingoCard({ card, cardIndex }) {
         <button
           id={`bingo-btn-${cardIndex}`}
           className="bingo-btn"
-          onClick={handleBingo}
+          onClick={handleBingoClick}
         >
           🎉 Bingo! 🎉
         </button>

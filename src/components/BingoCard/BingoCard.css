@@ -78,10 +78,6 @@
   font-size: 1.4rem;
   background-color: #f8fafc;
   transition: transform 0.2s, background-color 0.2s;
-}
-
-/* Clickable squares */
-.bingo-cell.clickable {
   cursor: pointer;
 }
 
