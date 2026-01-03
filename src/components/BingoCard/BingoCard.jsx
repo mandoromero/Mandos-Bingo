@@ -13,14 +13,20 @@ import "./BingoCard.css";
 
 export default function BingoCard({ card, cardIndex }) {
   const dispatch = useDispatch();
-  const { selectedCells, winningCombination } = useSelector(
-    (state) => state.bingo
-  );
+
+  const {
+    selectedCells,
+    winningCombination,
+    showCalledBlink,
+    calledNumbers,
+    currentNumber,
+  } = useSelector((state) => state.bingo);
 
   const [showEffect, setShowEffect] = useState(false);
+
   const cardSelected = selectedCells[cardIndex] || {};
 
-  // ✅ Check if this card has achieved the selected winning combination
+  // ✅ Determine if this card is winning
   const isWinningCard = (() => {
     switch (winningCombination) {
       case "Single Line":
@@ -46,14 +52,16 @@ export default function BingoCard({ card, cardIndex }) {
     setShowEffect(true);
     dispatch(stopGame());
     setTimeout(() => setShowEffect(false), 5000);
-  }
+  };
 
   return (
     <div className="bingo-wrapper" style={{ position: "relative" }}>
-      {/* 🎉 Confetti effect over this specific card */}
-      {showEffect && <WinningOverlay targetId={`bingo-card-${cardIndex}`} />}
+      {/* 🎉 Confetti */}
+      {showEffect && (
+        <WinningOverlay targetId={`bingo-card-${cardIndex}`} />
+      )}
 
-      {/* ✅ Bingo button appears once winning combo is achieved */}
+      {/* 🏆 Bingo button */}
       {isWinningCard && (
         <button
           id={`bingo-btn-${cardIndex}`}
@@ -68,17 +76,30 @@ export default function BingoCard({ card, cardIndex }) {
         {["B", "I", "N", "G", "O"].map((letter) => (
           <div key={letter} className="bingo-column">
             <div className="bingo-header">{letter}</div>
+
             {card[letter].map((num, idx) => {
               const isFree = num === "Free";
               const cellId = `${letter}${idx}`;
               const isMarked = cardSelected[cellId] || false;
 
+              const isCalled =
+                calledNumbers.includes(num) ||
+                currentNumber === num;
+
+              const shouldBlink =
+                showCalledBlink &&
+                isCalled &&
+                !isMarked &&
+                !isFree;
+
               return (
                 <div
                   key={cellId}
-                  className={`square bingo-cell ${isFree ? "free" : ""} ${
-                    isMarked ? "marked" : ""
-                  }`}
+                  className={`square bingo-cell
+                    ${isFree ? "free" : ""}
+                    ${isMarked ? "marked" : ""}
+                    ${shouldBlink ? "blinking" : ""}
+                  `}
                   onClick={() => handleToggle(letter, idx)}
                 >
                   {num}

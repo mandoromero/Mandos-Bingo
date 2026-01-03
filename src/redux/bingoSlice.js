@@ -30,6 +30,7 @@ const initialState = {
   remainingNumbers: [...allNumbers],
   winningCombination: "",
   winner: null,
+  showCalledBlink: false,
 };
 
 const checkForWin = (combination, card, selectedCells) => {
@@ -130,7 +131,7 @@ const bingoSlice = createSlice({
         current[cellId] = !current[cellId];
         state.selectedCells[cardIndex] = current;
 
-        // 🔍 Check for a win
+        //  🔍 Check for a win
         const card = state.cards[cardIndex];
         const selected = state.selectedCells[cardIndex];
         if (checkForWin(state.winningCombination, card, selected)) {
@@ -139,7 +140,11 @@ const bingoSlice = createSlice({
         }
       }
     },
-  },
+
+    toggleCalledBlink: (state) => {
+      state.showCalledBlink = !state.showCalledBlink;
+    },
+  }
 });
 
 export const {
@@ -152,6 +157,7 @@ export const {
   toggleCell,
   setWinningCombination,
   togglePause,
+  toggleCalledBlink,
 } = bingoSlice.actions;
 
 export default bingoSlice.reducer;

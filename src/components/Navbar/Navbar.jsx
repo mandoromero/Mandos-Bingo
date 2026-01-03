@@ -7,6 +7,8 @@ import {
   setCards,
   togglePause,          // ⬅️ import
 } from "../../redux/bingoSlice";
+import ToggleSound from "../ToggleSound/ToggleSound";
+import ToggleBlinking from "../ToggleBlinking/ToggleBlinking";
 import { generateMultipleCards } from "../../utils/generateBingoCard";
 import SelectCombination from "../SelectCombination/SelectCombination";
 import "./Navbar.css";
@@ -38,6 +40,8 @@ export default function Navbar() {
     <div className="navbar">
       <h1>Mando's Bingo!</h1>
       <div className="btn-wrapper">
+        <ToggleSound />
+        <ToggleBlinking />
         <SelectCombination />
 
         <select
