@@ -1,18 +1,25 @@
+import { useDispatch, useSelector } from "react-redux";
+import { toggleSound } from "../../redux/bingoSlice";
 import "./ToggleSound.css"
 
 export default function ToggleSound() {
+    const dispatch = useDispatch();
+    const soundOn = useSelector((state) => state.bingo.soundOn)
+
 
     return (
-        <div class="toggle-sound">
-            <p class="sound">Sound</p>
-            <label class="t-sound">
+        <div className="toggle-sound">
+            <p className="sound">Sound</p>
+            <label className="t-sound">
                 <span class="onoff">
-                    Off
+                    {soundOn ? "ON" : "OFF"}
                 </span>
                 <input 
                     type="checkbox" 
+                    checked={soundOn}
+                    onChange={() => dispatch(toggleSound())}
                 />
-                <span class="slider round"></span>
+                <span className="slider round"></span>
             </label>
         </div>  
     )

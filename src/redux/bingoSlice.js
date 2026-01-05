@@ -31,7 +31,7 @@ const initialState = {
   winningCombination: "",
   winner: null,
   showCalledBlink: false,
-};
+  soundOn: true,};
 
 const checkForWin = (combination, card, selectedCells) => {
   switch (combination) {
@@ -141,6 +141,10 @@ const bingoSlice = createSlice({
       }
     },
 
+    toggleSound: (state) => {
+      state.soundOn = !state.soundOn;
+    },
+
     toggleCalledBlink: (state) => {
       state.showCalledBlink = !state.showCalledBlink;
     },
@@ -157,6 +161,7 @@ export const {
   toggleCell,
   setWinningCombination,
   togglePause,
+  toggleSound,
   toggleCalledBlink,
 } = bingoSlice.actions;
 

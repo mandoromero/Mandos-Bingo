@@ -12,25 +12,30 @@ const getLetter = (num) => {
 };
 
 export default function Call() {
-  const { currentNumber } = useSelector((state) => state.bingo);
+  const {
+    currentNumber,
+    soundOn,
+    paused,
+    gameStarted,
+  } = useSelector((state) => state.bingo);
+
   const audioRef = useRef(null);
 
   useEffect(() => {
-    if (!currentNumber) return;
+    // 🚫 Do nothing if sound is off, game paused, or no number
+    if (!soundOn || paused || !gameStarted || !currentNumber) return;
 
     const letter = getLetter(currentNumber);
     if (!letter) return;
 
-    // Example: "B_1.wav", "N_32.wav"
     const fileName = `${letter}_${currentNumber}.wav`;
 
-    // Path into your assets folder
     const audioPath = new URL(
       `../assets/BINGO/${fileName}`,
       import.meta.url
     ).href;
 
-    // Stop any previous sound
+    // Stop previous sound
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
@@ -39,13 +44,18 @@ export default function Call() {
     const audio = new Audio(audioPath);
     audioRef.current = audio;
 
-    // Play and ignore errors like autoplay restrictions
-    audio
-      .play()
-      .catch((err) => {
-        console.warn("Audio playback failed:", err);
-      });
-  }, [currentNumber]);
+    audio.play().catch(() => {});
+  }, [currentNumber, soundOn, paused, gameStarted]);
 
-  return null; // no UI, only sound
+  // 🔕 Stop sound immediately when paused or muted
+  useEffect(() => {
+    if (!soundOn || paused) {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
+    }
+  }, [soundOn, paused]);
+
+  return null; // no UI, sound only
 }
