@@ -7,6 +7,7 @@ import BingoReferenceGrid from "./components/BingoReferenceGrid/BingoReferenceGr
 import Call from "./components/Call";
 import GameBoard from "./components/GameBoard/GameBoard";
 import NumberCaller from "./components/NumberCaller";
+import Footer from "./components/Footer/Footer";
 import "./App.css";
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
       </div>
       <NumberCaller />
       {gameStarted && <GameBoard />}
+      <Footer />
     </div>
   );
 }

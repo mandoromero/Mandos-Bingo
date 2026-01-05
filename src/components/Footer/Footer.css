@@ -1,0 +1,17 @@
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    padding: 15px 0;
+    background-color: #1e3a8a;
+    color: white;
+}
+
+.my-name {
+    font-size: 1.2rem;
+}
+
+.info {
+    font-size: 0.8rem;
+}

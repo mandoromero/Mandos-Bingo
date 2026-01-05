@@ -8,10 +8,10 @@ export default function ToggleBlinking() {
 
 
     return (
-        <div class="toggle-switch">
-            <p class="show">Show Called Nums.</p>
-            <label class="toggle">
-                <span class="onoff">
+        <div className="toggle-switch">
+            <p className="show">Show Called Nums.</p>
+            <label className="toggle">
+                <span className="onoff">
                     {showCalledBlink ? "ON" : "OFF"}
                 </span>
                 <input 
@@ -19,7 +19,7 @@ export default function ToggleBlinking() {
                     checked={showCalledBlink}
                     onChange={() => dispatch(toggleCalledBlink())}
                 />
-                <span class="slider round"></span>
+                <span className="slider round"></span>
             </label>
         </div>  
     )
